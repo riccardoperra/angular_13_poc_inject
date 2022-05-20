@@ -18,6 +18,11 @@ function detachView<T extends { new (...args: any[]): {} }>(constructor: T) {
   };
 }
 
+/**
+ *
+ * Managing observable state using proxies and change detection triggered automatically
+ *
+ */
 @Component({
   selector: 'auto-cd-example',
   template: `
@@ -45,9 +50,13 @@ export class AutoCdComponent {
     counter: 0,
   };
 
-  state = injectCreateState({
-    counter: 0,
-  });
+  state = injectCreateState(
+    {
+      counter: 0,
+    },
+    // Can be markForCheck if view is not detached --> remove @detachView from component metadata
+    'detectChanges'
+  );
 
   increment() {
     setTimeout(() => {

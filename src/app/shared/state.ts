@@ -4,16 +4,27 @@ import { skip } from 'rxjs/operators';
 import { injectOnDestroy$ } from '../action';
 import { injectHold } from './hold';
 
-export function injectCreateState<T extends object>(initialState: T) {
+export function injectCreateState<T extends object>(
+  initialState: T,
+  mode: 'detectChanges' | 'markForCheck' = 'detectChanges'
+) {
   const viewRef = ɵɵdirectiveInject(ChangeDetectorRef) as ViewRef;
   const destroy$ = injectOnDestroy$();
   const state$ = new BehaviorSubject<T>(initialState);
   const hold = injectHold();
 
+  const triggerCd = () => {
+    if (mode === 'detectChanges') {
+      viewRef.detectChanges();
+    } else {
+      viewRef.markForCheck();
+    }
+  };
+
   queueMicrotask(() => {
-    state$.subscribe(() => viewRef.detectChanges());
+    state$.subscribe(triggerCd);
   });
-  hold(state$.pipe(skip(1)), () => viewRef.detectChanges());
+  hold(state$.pipe(skip(1)), triggerCd);
 
   destroy$.subscribe(() => state$.complete());
 
