@@ -1,0 +1,6 @@
+<div class="content">
+  <h1>Depth {{ depth }}</h1>
+  <button (click)="showForm = !showForm">Show/hide form</button>
+
+  <hello [depth]="depth" name="{{ name }}" *ngIf="showForm"></hello>
+</div>
