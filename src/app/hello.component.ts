@@ -54,7 +54,7 @@ export const injectParentHelloComponent = () => {
      <hello
       *ngIf="show"
       [depth]="depth + 1"
-      [name]="name"
+      [name]="computedLabel"
       [show]="false">
     </hello>
   `,
@@ -78,7 +78,7 @@ export const injectParentHelloComponent = () => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HelloComponent implements OnInit {
-  @Input() name: string;
+  @Input() name: string = 'The component with no parent';
   @Input() depth: number = 0;
   @Input() show = false;
 
@@ -100,8 +100,8 @@ export class HelloComponent implements OnInit {
     return `${this.show ? 'Hide' : 'Show'} ${this.depth}`;
   }
 
-  get name(): string {
-    return 'Hello component with depth: '  this.depth;
+  get computedLabel(): string {
+    return 'Hello component with depth: ' + this.depth;
   }
 
   ngOnInit(): void {
