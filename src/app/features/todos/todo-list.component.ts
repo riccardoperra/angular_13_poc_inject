@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { injectTodoService } from './todo-list.service';
 import { finalize } from 'rxjs';
-import { TodoComponent } from './todo.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'todo-list',

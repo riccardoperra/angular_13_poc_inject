@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { TodosModule } from './features/todos/todos.module';
 import { AppRoutingModule } from './router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     BrowserModule,
-    FormsModule,
     ReactiveFormsModule,
     TodosModule,
+    RouterModule,
     AppRoutingModule,
   ],
   declarations: [AppComponent, HelloComponent],

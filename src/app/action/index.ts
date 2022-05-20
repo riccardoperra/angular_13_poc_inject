@@ -50,6 +50,7 @@ export function getActions<T extends {}>(): RxActions<T> {
   ) as RxActions<T>;
 
   destroy$.subscribe(() => {
+    console.log('DESTROY ALL FROM', viewRef['context'].constructor.name);
     Object.values(subjects as Record<string, Subject<any>>).forEach(
       (subject: Subject<any>) => subject.complete()
     );
