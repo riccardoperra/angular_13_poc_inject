@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, ɵɵdirectiveInject, ViewRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { skip } from 'rxjs/operators';
 import { injectOnDestroy$ } from '../action';
 import { injectHold } from './hold';
 
@@ -9,7 +10,10 @@ export function injectCreateState<T extends object>(initialState: T) {
   const state$ = new BehaviorSubject<T>(initialState);
   const hold = injectHold();
 
-  hold(state$, () => viewRef.markForCheck());
+  queueMicrotask(() => {
+    state$.subscribe(() => viewRef.detectChanges());
+  });
+  hold(state$.pipe(skip(1)), () => viewRef.detectChanges());
 
   destroy$.subscribe(() => state$.complete());
 
