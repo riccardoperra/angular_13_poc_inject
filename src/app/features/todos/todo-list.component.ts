@@ -14,7 +14,11 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit() {
     this.todoList$.state$
-      .pipe(finalize(() => console.log('UNSUBSCRIBE FROM TODO')))
-      .subscribe(console.log);
+      .pipe(
+        finalize(() =>
+          console.log('TODOLIST -> UNSUBSCRIBE FROM TODO LIST STATE')
+        )
+      )
+      .subscribe();
   }
 }

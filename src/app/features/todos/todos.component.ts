@@ -5,19 +5,16 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { getActions } from '../../action';
+import { withIdentifier } from '../../shared/id.service';
 import { injectTodoService, TodoListService } from './todo-list.service';
-import { TodoService } from './todo.service';
-
-interface Actions {
-  add: void;
-  delete: string;
-}
 
 @Component({
   selector: 'app-todos',
   template: `
     <div class="wrapper">
-      <form [formGroup]="form">
+      <button (click)="todoService.reload()">Reload</button>
+
+      <form [formGroup]="form" (ngSubmit)="ui.submit()">
         <div>
           <input placeholder="Title" />
         </div>
@@ -31,17 +28,25 @@ interface Actions {
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [TodoService, TodoListService],
+  providers: [withIdentifier('todo'), TodoListService],
 })
 export class TodosComponent {
   private readonly fb = ɵɵdirectiveInject(FormBuilder);
+  readonly ui = getActions<{ submit: void }>();
+
   readonly todoService = injectTodoService();
-  readonly actions = getActions<Actions>();
 
   readonly form = this.fb.group({
     title: this.fb.control(''),
     body: this.fb.control(''),
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.ui.submit$.subscribe(() => {
+      this.todoService.addTodo({
+        title: this.form.value.title,
+        body: this.form.value.body,
+      });
+    });
+  }
 }

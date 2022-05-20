@@ -13,10 +13,4 @@ import {
 })
 export class AppComponent {
   name = 'Angular ' + VERSION.major;
-
-  @Input()
-  depth: number = 0;
-
-  @Input()
-  showForm = true;
 }

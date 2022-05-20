@@ -17,25 +17,6 @@ export const injectOnDestroy$ = () => {
     subject$.complete();
   };
 
-  viewRef.onDestroy(destroy);
-
-  return subject$ as Observable<void>;
-};
-
-export function getActions<T extends {}>(): RxActions<T> {
-  const destroy$ = new ReplaySubject<void>(1);
-  const viewRef = ɵɵdirectiveInject(ChangeDetectorRef) as ViewRef;
-
-  const destroy = () => {
-    destroy$.next();
-    destroy$.complete();
-  };
-
-  type SubjectMap<T> = { [K in keyof T]: Subject<T[K]> };
-
-  const subjects: SubjectMap<T> = {} as SubjectMap<T>;
-  const errorHandler = ɵɵdirectiveInject(ErrorHandler);
-
   queueMicrotask(() => {
     // Check if lView has been destroyed before that microtask event
     if (viewRef.destroyed) {
@@ -43,6 +24,18 @@ export function getActions<T extends {}>(): RxActions<T> {
     }
     viewRef.onDestroy(destroy);
   });
+
+  return subject$ as Observable<void>;
+};
+
+export function getActions<T extends {}>(): RxActions<T> {
+  const destroy$ = injectOnDestroy$();
+  const viewRef = ɵɵdirectiveInject(ChangeDetectorRef) as ViewRef;
+
+  type SubjectMap<T> = { [K in keyof T]: Subject<T[K]> };
+
+  const subjects: SubjectMap<T> = {} as SubjectMap<T>;
+  const errorHandler = ɵɵdirectiveInject(ErrorHandler);
 
   const proxy = new Proxy(
     {} as RxActions<T>,

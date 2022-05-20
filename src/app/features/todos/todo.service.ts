@@ -14,8 +14,9 @@ export interface Todo {
 })
 export class TodoService {
   private readonly baseHref = 'https://jsonplaceholder.typicode.com';
+  readonly httpClient = inject(HttpClient);
 
   getAll(): Observable<readonly Todo[]> {
-    return inject(HttpClient).get<Todo[]>(`${this.baseHref}/todo?userId=1`);
+    return this.httpClient.get<Todo[]>(`${this.baseHref}/todo?userId=1`);
   }
 }

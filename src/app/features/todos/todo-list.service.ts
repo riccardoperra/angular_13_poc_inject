@@ -1,16 +1,25 @@
-import { Injectable, InjectFlags, ɵɵdirectiveInject } from '@angular/core';
+import {
+  Injectable,
+  InjectFlags,
+  OnInit,
+  ɵɵdirectiveInject,
+} from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Todo } from './todo.service';
 import { HttpClient } from '@angular/common/http';
 import { IdentifierService } from '../../shared/id.service';
+import { injectOnDestroy$ } from '../../action';
 
 @Injectable()
 export class TodoListService {
-  readonly state$ = new BehaviorSubject<Todo[]>([]);
-
+  readonly state$ = new BehaviorSubject<readonly Todo[]>([]);
+  readonly destroy$ = injectOnDestroy$();
+  httpClient = ɵɵdirectiveInject(HttpClient);
   idService = ɵɵdirectiveInject(IdentifierService);
 
-  constructor() {}
+  constructor() {
+    this.destroy$.subscribe(() => this.state$.complete());
+  }
 
   addTodo(todo: Pick<Todo, 'title' | 'body'>) {
     this.state$.next([
@@ -24,9 +33,13 @@ export class TodoListService {
   }
 
   loadFromServer(): Observable<readonly Todo[]> {
-    return ɵɵdirectiveInject(HttpClient).get<Todo[]>(
-      'https://jsonplaceholder.typicode.com/todo?userId=1'
+    return this.httpClient.get<Todo[]>(
+      'https://jsonplaceholder.typicode.com/todos?userId=1&_limit=5'
     );
+  }
+
+  reload(): void {
+    this.loadFromServer().subscribe((response) => this.state$.next(response));
   }
 }
 
