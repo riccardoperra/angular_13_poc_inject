@@ -16,7 +16,9 @@ export class TodoListComponent implements OnInit {
     this.todoList$.state$
       .pipe(
         finalize(() =>
-          console.log('TODOLIST -> UNSUBSCRIBE FROM TODO LIST STATE')
+          console.log(
+            'TodoListComponent -> Unsubscribe from state without takeUntil'
+          )
         )
       )
       .subscribe();

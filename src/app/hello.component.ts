@@ -26,7 +26,7 @@ import { getActions } from './action';
     <hr/>
 
     
-    <button (click)="show = !show">Show</button>
+    <button (click)="show = !show">{{showHideLabel}}</button>
      <hello
       *ngIf="show"
       [depth]="depth + 1"
@@ -69,6 +69,10 @@ export class HelloComponent implements OnInit {
     add: string;
     delete: string;
   }>();
+
+  get showHideLabel() {
+    return `${this.show ? 'Hide' : 'Show'} ${this.depth}`;
+  }
 
   ngOnInit(): void {
     this.actions.add$
