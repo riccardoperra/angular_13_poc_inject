@@ -23,12 +23,15 @@ import { getActions } from './action';
 
     </div>
 
-      <hr/>
+    <hr/>
 
-     <my-app 
-        [depth]="depth + 1"
-        [showForm]="false">
-      </my-app>
+    
+    <button (click)="show = !show">Show</button>
+     <hello
+      *ngIf="show"
+      [depth]="depth + 1"
+      [show]="false">
+    </hello>
 
   
   `,
@@ -53,6 +56,7 @@ import { getActions } from './action';
 export class HelloComponent implements OnInit {
   @Input() name: string;
   @Input() depth: number = 0;
+  @Input() show = false;
 
   readonly list$ = new BehaviorSubject<string[]>([]);
 

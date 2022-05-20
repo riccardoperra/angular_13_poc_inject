@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { getActions } from 'src/app/action';
+import { getActions } from '../../action';
 import { Todo } from './todo.service';
 
 interface TodoActions {
@@ -11,9 +11,9 @@ interface TodoActions {
   template: `
     <div class="wrapper">
       <h1>
-        {{todo?.title ?? 'No title'}}
+        {{todo?.title || 'No title'}}
       </h1>
-      <h3>{{todo?.body ?? 'No body'}}</h3>
+      <h3>{{todo?.body || 'No body'}}</h3>
 
       <button (click)="actions$.delete()">Delete</button>
     </div>

@@ -4,18 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
-import { RouterModule } from '@angular/router';
-import { TodosComponent } from './features/todos/todos.component';
+import { TodosModule } from './features/todos/todos.module';
+import { AppRoutingModule } from './router';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: 'todos', component: TodosComponent },
-      { path: 'depth', component: HelloComponent },
-    ]),
+    TodosModule,
+    AppRoutingModule,
   ],
   declarations: [AppComponent, HelloComponent],
   bootstrap: [AppComponent],
