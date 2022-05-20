@@ -26,16 +26,16 @@ function detachView<T extends { new (...args: any[]): {} }>(constructor: T) {
 @Component({
   selector: 'auto-cd-example',
   template: `
-    <h1>Counter - Auto CD</h1>
+    <h1>Counter - Handling change detection automatically </h1>
     <div>{{ state.counter }}</div>
     <div>
-      <button (click)="reset()">RESET</button>
-      <button (click)="increment()">+</button>
+      <button (click)="resetWithCd()">RESET</button>
+      <button (click)="incrementWithCd()">+</button>
     </div>
 
     <hr/>
 
-    <h1>Counter - Default (Will not work)</h1>
+    <h1>Counter - Default (Will not update UI automatically)</h1>
     <div>{{ stateBasic.counter }}</div>
     <div>
       <button (click)="resetBasic()">RESET</button>
@@ -58,13 +58,13 @@ export class AutoCdComponent {
     'detectChanges'
   );
 
-  increment() {
+  incrementWithCd() {
     setTimeout(() => {
       ++this.state.counter;
     }, 500);
   }
 
-  reset() {
+  resetWithCd() {
     setTimeout(() => {
       this.state.counter = 0;
     }, 500);
