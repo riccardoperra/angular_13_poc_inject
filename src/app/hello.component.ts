@@ -14,22 +14,6 @@ import { BehaviorSubject } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { getActions } from './action';
 
-const PARENT_HELLO_COMPONENT = new InjectionToken<HelloComponent>(
-  'Parent component'
-);
-
-function provideParentHelloComponent() {
-  return {
-    provide: PARENT_HELLO_COMPONENT,
-    useFactory: (cmp: HelloComponent) => cmp,
-    deps: [[HelloComponent, new SkipSelf(), new Optional()]],
-  };
-}
-
-export const injectParentHelloComponent = () => {
-  return ɵɵdirectiveInject(PARENT_HELLO_COMPONENT);
-};
-
 @Component({
   selector: 'hello',
   template: `
@@ -74,7 +58,6 @@ export const injectParentHelloComponent = () => {
 
   `,
   ],
-  providers: [provideParentHelloComponent()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HelloComponent implements OnInit {
@@ -89,7 +72,10 @@ export class HelloComponent implements OnInit {
     Validators.required
   );
 
-  readonly parent = ɵɵdirectiveInject(PARENT_HELLO_COMPONENT);
+  readonly parent = ɵɵdirectiveInject(
+    HelloComponent,
+    InjectFlags.SkipSelf | InjectFlags.Optional
+  );
 
   readonly actions = getActions<{
     add: string;
