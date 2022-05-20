@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  InjectFlags,
-  OnInit,
-  ɵɵdirectiveInject,
-} from '@angular/core';
+import { Injectable, InjectFlags, ɵɵdirectiveInject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Todo } from './todo.service';
 import { HttpClient } from '@angular/common/http';
