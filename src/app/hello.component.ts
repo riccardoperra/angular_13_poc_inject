@@ -65,7 +65,7 @@ export class HelloComponent implements OnInit {
     Validators.required
   );
 
-  actions = getActions<{
+  readonly actions = getActions<{
     add: string;
     delete: string;
   }>();

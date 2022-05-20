@@ -13,12 +13,15 @@ export const injectOnDestroy$ = () => {
   const viewRef = ɵɵdirectiveInject(ChangeDetectorRef) as ViewRef;
 
   const destroy = () => {
+    console.log(
+      `${viewRef['context'].constructor.name} -> Clean all observables`
+    );
     subject$.next();
     subject$.complete();
   };
 
   queueMicrotask(() => {
-    // Check if lView has been destroyed before that microtask event
+    // Check if lView has been destroyed before microTask event
     if (viewRef.destroyed) {
       destroy();
     }
@@ -43,7 +46,6 @@ export function getActions<T extends {}>(): RxActions<T> {
   ) as RxActions<T>;
 
   destroy$.subscribe(() => {
-    console.log('DESTROY ALL FROM', viewRef['context'].constructor.name);
     Object.values(subjects as Record<string, Subject<any>>).forEach(
       (subject: Subject<any>) => subject.complete()
     );
