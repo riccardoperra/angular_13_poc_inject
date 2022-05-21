@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import {
-    AfterViewInit,
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnInit,
   VERSION,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { allowsInjection, injectEverywhere } from './shared/inject-everywhere';
+import { injectEverywhere } from './shared/inject-everywhere';
 
 @Component({
   selector: 'my-app',
@@ -15,7 +15,6 @@ import { allowsInjection, injectEverywhere } from './shared/inject-everywhere';
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-@allowsInjection
 export class AppComponent implements OnInit, AfterViewInit {
   name = 'Angular ' + VERSION.major;
 
