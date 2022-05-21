@@ -18,6 +18,8 @@ import { injectEverywhere } from './shared/inject-everywhere';
 export class AppComponent implements OnInit, AfterViewInit {
   name = 'Angular ' + VERSION.major;
 
+  // The this context must be passwed
+
   ngOnInit(): void {
     const lazyHttp = injectEverywhere(this, HttpClient);
     console.log(lazyHttp);
