@@ -37,7 +37,7 @@ export function injectCreateState<T extends object>(
     },
     set(target, prop, value) {
       if (isKeyOf(prop, initialState)) {
-        target.next({ [prop]: value } as any);
+        target.next({ ...target.value, [prop]: value } as any);
       } else {
         Reflect.set(target, prop, value);
       }

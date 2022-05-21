@@ -1,0 +1,8 @@
+<div>
+  <button (click)="load()">Reload</button>
+</div>
+
+<div *ngIf="state.loading; else content">Loading...</div>
+<ng-template #content>
+  {{ state.todos | json }}
+</ng-template>

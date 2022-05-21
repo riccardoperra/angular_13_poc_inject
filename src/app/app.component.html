@@ -1,10 +1,14 @@
 <h1>inject function using <strong>Angular 13</strong></h1>
 
-<a routerLink="/" style="margin-right: 1rem;">Home</a>
+<a routerLink="/inject-outside-constructor" style="margin-right: 1rem;">
+  Inject outside constructor
+</a>
 <a routerLink="/todos" style="margin-right: 1rem;">With shared service</a>
 <a routerLink="/depth" style="margin-right: 1rem;">Nested providers</a>
 <a routerLink="/auto-cd">
   Auto-track change detection with OnPush + detached view
 </a>
 
-<router-outlet></router-outlet>
+<div style="margin-top: 2rem">
+  <router-outlet></router-outlet>
+</div>

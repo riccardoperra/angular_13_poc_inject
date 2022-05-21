@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
@@ -9,9 +9,11 @@ import { AppRoutingModule } from './router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { InjectOutsideConstructorComponent } from './features/inject-outside-constructor/inject-everywhere.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -19,7 +21,11 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, HelloComponent],
+  declarations: [
+    AppComponent,
+    HelloComponent,
+    InjectOutsideConstructorComponent,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
