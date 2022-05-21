@@ -29,18 +29,17 @@ import { getActions } from '../../action';
        {{item}} -  <button (click)="actions.delete(item)">Delete</button>
       </div>
 
-    </div>
-
-    <hr/>
+      <hr/>
 
     
-    <button (click)="show = !show">{{showHideLabel}}</button>
-     <hello
-      *ngIf="show"
-      [depth]="depth + 1"
-      [name]="computedLabel"
-      [show]="false">
-    </hello>
+      <button (click)="show = !show">{{showHideLabel}}</button>
+         <hello
+          *ngIf="show"
+          [depth]="depth + 1"
+          [name]="computedLabel"
+          [show]="false">
+        </hello>
+      </div>
   `,
   styles: [
     `

@@ -13,7 +13,17 @@ import { injectCreateState } from '../../shared/state';
 
 @Component({
   selector: 'inject-everywhere',
-  templateUrl: './inject-everywhere.component.html',
+  template: `
+  <div>
+    <button (click)="load()">Reload</button>
+   </div>
+
+  <div *ngIf="state.loading; else content">Loading...</div>
+  <ng-template #content>  
+    {{ state.todos | json }}
+  </ng-template>
+
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InjectOutsideConstructorComponent

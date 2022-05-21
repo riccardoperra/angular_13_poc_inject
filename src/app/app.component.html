@@ -1,13 +1,34 @@
 <h1>inject function using <strong>Angular 13</strong></h1>
 
-<a routerLink="/inject-outside-constructor" style="margin-right: 1rem;">
-  Inject outside constructor
-</a>
-<a routerLink="/todos" style="margin-right: 1rem;">With shared service</a>
-<a routerLink="/depth" style="margin-right: 1rem;">Nested providers</a>
-<a routerLink="/auto-cd">
-  Auto-track change detection with OnPush + detached view
-</a>
+<div class="link">
+  <div>
+    Example using a shared service between component, `getAction` helper and
+    auto unsubscribe
+  </div>
+  <a routerLink="/todos" style="margin-right: 1rem;">With shared service</a>
+</div>
+
+<div class="link">
+  <div>Example using nested providers and custom InjectFlags</div>
+  <a routerLink="/nested" style="margin-right: 1rem;">Nested providers</a>
+</div>
+
+<div class="link">
+  <div>
+    Example using decorators, tracking change detection automatically in a
+    component with detached view
+  </div>
+  <a routerLink="/auto-cd" style="margin-right: 1rem;">
+    Auto-track change detection with OnPush + detached view
+  </a>
+</div>
+
+<div class="link">
+  <div>Example injecting dependencies outside constructor</div>
+  <a routerLink="/inject-outside-constructor" style="margin-right: 1rem;">
+    Inject outside constructor
+  </a>
+</div>
 
 <div style="margin-top: 2rem">
   <router-outlet></router-outlet>
