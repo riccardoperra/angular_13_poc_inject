@@ -20,8 +20,10 @@ export const injectOnDestroy$ = () => {
     subject$.complete();
   };
 
+  /**
+   * https://github.com/angular/angular/blob/0ff4eda3d4bd52fb145285a472e9c0237ea8e68f/packages/core/src/render3/instructions/shared.ts#L804-L806
+   */
   queueMicrotask(() => {
-    // Check if lView has been destroyed before microTask event
     if (viewRef.destroyed) {
       destroy();
     }
