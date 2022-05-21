@@ -22,6 +22,7 @@ export function injectCreateState<T extends object>(
     }
   };
 
+  // `cd.detectChanges()` cannot be invoked when component is not ready
   queueMicrotask(() => {
     state$.subscribe(triggerCd);
   });
