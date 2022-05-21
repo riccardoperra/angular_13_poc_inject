@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, ɵɵdirectiveInject, ViewRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import { injectOnDestroy$ } from '../action';
+import { getActions, injectOnDestroy$ } from '../action';
+import { RxActions } from '../action/types';
 import { injectHold } from './hold';
 
 export function injectCreateState<T extends object>(
@@ -48,4 +49,25 @@ export function injectCreateState<T extends object>(
 
 export function isKeyOf<T extends Object>(key: any, obj: T): key is keyof T {
   return typeof key === 'string' && Object.keys(obj).includes(key);
+}
+
+type BetterState<T extends object, Actions extends {}> = BehaviorSubject<T> &
+  T & {
+    actions: RxActions<Actions>;
+    hold: <T>(o$: Observable<T>, cb: (value: T) => void) => void;
+  };
+
+/**
+ * State management with `hold`, `getActions` features and automatic change detection
+ */
+export function injectBetterState<T extends object, Actions extends {}>(
+  initialState: T,
+  mode: 'detectChanges' | 'markForCheck' = 'detectChanges'
+): BetterState<T, Actions> {
+  const state = injectCreateState(initialState, mode);
+  const hold = injectHold();
+  const actions = getActions<Actions>();
+  state['hold'] = hold;
+  state['actions'] = actions;
+  return state as BetterState<T, Actions>;
 }

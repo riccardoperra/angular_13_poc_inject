@@ -8,14 +8,25 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { delay, finalize } from 'rxjs/operators';
+import { getActions } from '../../action';
+import { injectHold } from '../../shared/hold';
 import { injectEverywhere } from '../../shared/inject-everywhere';
-import { injectCreateState } from '../../shared/state';
+import { injectBetterState, injectCreateState } from '../../shared/state';
+
+interface Actions {
+  load: void;
+}
+
+interface State {
+  todos: any[];
+  loading: boolean;
+}
 
 @Component({
   selector: 'inject-everywhere',
   template: `
   <div>
-    <button (click)="load()">Reload</button>
+    <button (click)="state.actions.load()">Reload</button>
    </div>
 
   <div *ngIf="state.loading; else content">Loading...</div>
@@ -29,7 +40,7 @@ import { injectCreateState } from '../../shared/state';
 export class InjectOutsideConstructorComponent
   implements OnInit, AfterViewInit
 {
-  readonly state = injectCreateState(
+  readonly state = injectBetterState<State, Actions>(
     {
       todos: [],
       loading: false,
@@ -38,7 +49,9 @@ export class InjectOutsideConstructorComponent
   );
 
   ngOnInit(): void {
-    this.load();
+    this.state.hold(this.state.actions.load$, () => this.load());
+
+    this.state.actions.load();
   }
 
   ngAfterViewInit(): void {
@@ -46,7 +59,7 @@ export class InjectOutsideConstructorComponent
     console.log(lazyFb);
   }
 
-  load(): void {
+  private load(): void {
     const lazyHttp = injectEverywhere(this, HttpClient);
     this.state.loading = true;
     lazyHttp
