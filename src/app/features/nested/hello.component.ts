@@ -12,7 +12,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import { getActions } from './action';
+import { getActions } from '../../action';
 
 @Component({
   selector: 'hello',
@@ -65,6 +65,11 @@ export class HelloComponent implements OnInit {
   @Input() depth: number = 0;
   @Input() show = false;
 
+  readonly actions = getActions<{
+    add: string;
+    delete: string;
+  }>();
+
   readonly list$ = new BehaviorSubject<string[]>([]);
 
   readonly control = ɵɵdirectiveInject(FormBuilder).control(
@@ -76,11 +81,6 @@ export class HelloComponent implements OnInit {
     HelloComponent,
     InjectFlags.SkipSelf | InjectFlags.Optional
   );
-
-  readonly actions = getActions<{
-    add: string;
-    delete: string;
-  }>();
 
   get showHideLabel() {
     return `${this.show ? 'Hide' : 'Show'} ${this.depth}`;
