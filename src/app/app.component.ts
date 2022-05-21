@@ -22,7 +22,7 @@ export class AppComponent {
       href: '/nested',
     },
     {
-      title: `Example using decorators, tracking change detection automatically in a component with detached view`,
+      title: `Example using decorators and tracking change detection automatically in a component with detached view`,
       name: 'Auto-track change detection with OnPush + detached view',
       href: '/auto-cd',
     },
