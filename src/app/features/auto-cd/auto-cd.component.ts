@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { injectCreateState } from '../../shared/state';
 
-// Detach Angular component from view --> ui will be updated only with cd.detectChanges()
+// Detach Angular component from change detection tree --> ui will be updated only with cd.detectChanges()
 function detachView<T extends { new (...args: any[]): {} }>(constructor: T) {
   // @ts-expect-error
   return class extends constructor {
