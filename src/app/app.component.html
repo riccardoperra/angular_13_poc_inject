@@ -1,32 +1,11 @@
 <h1>inject function using <strong>Angular 13</strong></h1>
 
-<div class="link">
+<div class="link" *ngFor="let link of links">
   <div>
-    Example using a shared service between component, `getAction` helper and
-    auto unsubscribe
+    {{ link.title }}
   </div>
-  <a routerLink="/todos" routerLinkActive="active">With shared service</a>
-</div>
-
-<div class="link">
-  <div>Example using nested providers and custom InjectFlags</div>
-  <a routerLink="/nested" routerLinkActive="active">Nested providers</a>
-</div>
-
-<div class="link">
-  <div>
-    Example using decorators, tracking change detection automatically in a
-    component with detached view
-  </div>
-  <a routerLink="/auto-cd" routerLinkActive="active">
-    Auto-track change detection with OnPush + detached view
-  </a>
-</div>
-
-<div class="link">
-  <div>Example injecting dependencies outside constructor</div>
-  <a routerLink="/inject-outside-constructor" routerLinkActive="active">
-    Inject outside constructor
+  <a [routerLink]="link.href" routerLinkActive="active">
+    {{ link.name }}
   </a>
 </div>
 
